@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function addEditProduct(Request $request, $id=null) {
         if($id=="") {
             $title = "პროდუქტის დამატება";
-            $product = new Product;
+            $product = new Product();
         }else {
             $title = "პროდუქტის რედაქტირება";
         }
@@ -78,9 +78,9 @@ class ProductController extends Controller
             $this->validate($request, $rules, $customMessages);
 
             if(empty($data['is_featured'])) {
-                $is_featured = 0;
+                $is_featured = "No";
             } else {
-                $is_featured = 1;
+                $is_featured = "Yes";
             }
             if(empty($data['fabric'])) {
                 $data['fabric'] = "";
@@ -113,17 +113,13 @@ class ProductController extends Controller
                 $data['pattern'] = "";
             } 
             if(empty($data['product_discount'])) {
-                $data['product_discount'] = "";
+                $data['product_discount'] = 0;
             } 
             if(empty($data['product_weight'])) {
-                $data['product_weight'] = "";
-            } 
-            if(empty($data['main_image'])) {
-                $data['main_image'] = "";
+                $data['product_weight'] = 0;
             } 
 
             // Save Product Details in products table
-            // $product = new Product;
             $categoryDetails = Category::find($data['category_id']);
             $product->section_id = $categoryDetails['section_id'];
             $product->category_id = $data['category_id'];
@@ -144,6 +140,7 @@ class ProductController extends Controller
             $product->meta_keywords = $data['meta_keywords'];
             $product->meta_description = $data['meta_description'];
             $product->is_featured = $is_featured;
+            $product->status = 1;
             $product->save();
             session::flash('success_message', 'პროდუქტი წარმატებით დაემატა');
             return redirect('admin/products');
@@ -164,4 +161,3 @@ class ProductController extends Controller
         return view('admin.products.add_edit_product')->with(compact('title', 'fabricArray', 'sleeveArray', 'patternArray','fitArray','occasionArray', 'categories'));
     } 
 }
-// https://youtu.be/pAA9avXhKh4?t=1718

@@ -221,7 +221,7 @@
                     </div>
                     <div class="form-group">
                         <label for="meta_descrition">გაყიდვაშია</label>
-                        <input type="checkbox" name="is_featured" id="is_featured" value="1">
+                        <input type="checkbox" name="is_featured" id="is_featured" value="Yes">
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
