@@ -203,4 +203,46 @@ class ProductController extends Controller
 
         return view('admin.products.add_edit_product')->with(compact('title', 'fabricArray', 'sleeveArray', 'patternArray','fitArray','occasionArray', 'categories', 'productdata'));
     } 
+
+    public function deleteProductImage($id) {
+        // Get Product Image
+        $productImage = Product::select('product_image')->where('id', $id)->first();
+        // Get Product Image Path
+        $small_image_path = 'images/product_images/small';
+        $medium_image_path = 'images/product_images/medium';
+        $large_image_path = 'images/product_images/large';
+        // Delete Product Small Image if exsts in small folder
+        if(file_exists($small_image_path.$productImage->main_image)) {
+            unlink($small_image_path.$productImage->main_image);
+        }
+        // Delete Product Medium Image if exsts in small folder
+        if(file_exists($medium_image_path.$productImage->main_image)) {
+            unlink($medium_image_path.$productImage->main_image);
+        }
+        // Delete Product Large Image if exsts in small folder
+        if(file_exists($large_image_path.$productImage->main_image)) {
+            unlink($large_image_path.$productImage->main_image);
+        }
+        // Delete Product Image form product table
+        Product::where('id', $id)->update(['main_image'=>'']);
+        session::flash('success_message', $message);
+        $message = 'პროდუქტის ფოტო წარმატებით წაიშალა!';
+        return redirect()->back();
+    }
+
+    public function deleteProductVideo($id) {
+        // Get Product Video
+        $productVideo = Product::select('product_video')->where('id', $id)->first();
+        // Get Product Video Path
+        $product_video_path = 'videos/product_videos/';
+        // Delete Product Video from  product_videos if exsts
+        if(file_exists($cproduct_video_path.$productVideo->product_video)) {
+            unlink($product_video_path.$productVideo->product_video);
+        }
+        // Delete Product Video form categories table
+        Product::where('id', $id)->update(['product_video'=>'']);
+        session::flash('success_message', $message);
+        $message = 'პროდუქტის წარმატებით წაიშალა!';
+        return redirect()->back();
+    }
 }

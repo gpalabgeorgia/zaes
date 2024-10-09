@@ -113,6 +113,14 @@
                             </div>
                         </div>
                         <div>ფოტოს რეკომენდირებული ზომა: width - 1040px, Height - 1200px;</div>
+                        @if(!empty($productdata['main_image']))
+                            <div>
+                                <img style="width: 80px; margin-top: 5px;" src="{{ asset('images/product_images/small/'.$productdata['main_image']) }}" alt="">
+                                &nbsp;
+                                <a class="confirmDelete" href="javascript:void(0)" record="product-image"recordid="{{ $productdata['id'] }}">ფოტოს წაშლა</a>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
                 </div>
@@ -129,6 +137,10 @@
                                 <span class="input-group-text">ატვირთვა</span>
                             </div>
                         </div>
+                        @if(!empty($productdata['product_video']))
+                            <div><a href="{{ url('videos/product_videos/'.$productdata['product_video']) }}" download="">გადმოწერა</a> | &nbsp;
+                                <a class="confirmDelete" href="javascript:void(0)" record="product-video" recordid="{{ $productdata['id'] }}">ვიდეოს წაშლა</a></div>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="description">პროდუქტის აღწერა</label>
