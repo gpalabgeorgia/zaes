@@ -112,6 +112,7 @@
                                 <span class="input-group-text">ატვირთვა</span>
                             </div>
                         </div>
+                        <div>ფოტოს რეკომენდირებული ზომა: width - 1040px, Height - 1200px;</div>
                     </div>
                 </div>
                 </div>
