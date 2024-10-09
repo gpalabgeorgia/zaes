@@ -19,8 +19,6 @@ class ProductController extends Controller
         },'section'=>function($query){
             $query->select('id','name');
         }])->get();
-        // $products = json_decode(json_encode($products));
-        // echo "<pre>"; print_r($products); die;
         return view('admin.products.products')->with(compact('products'));
     }
 
@@ -49,13 +47,19 @@ class ProductController extends Controller
     public function addEditProduct(Request $request, $id=null) {
         if($id=="") {
             $title = "პროდუქტის დამატება";
-            $product = new Product();
+            $product = new Product;
+            $productdata = array();
+            $message = "პროდუქტი წარმატებით დაემატა";
         }else {
             $title = "პროდუქტის რედაქტირება";
+            $productdata = Product::find($id);
+            $productdata = json_decode(json_encode($productdata), true);
+            // echo "<pre>"; print_r($productdata); die;
+            $product = Product::find($id);
+            $message = "პროდუქტი წარმატებით განახლდა";
         }
         if($request->isMethod('post')) {
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
 
             // Product Validations
             $rules = [
@@ -182,7 +186,7 @@ class ProductController extends Controller
             $product->is_featured = $is_featured;
             $product->status = 1;
             $product->save();
-            session::flash('success_message', 'პროდუქტი წარმატებით დაემატა');
+            session::flash('success_message', $message);
             return redirect('admin/products');
 
         }
@@ -196,8 +200,7 @@ class ProductController extends Controller
         // Sections with Categories and Sub Categories
         $categories = Sections::with('categories')->get();
         $categories = json_decode(json_encode($categories), true);
-        // echo "<pre>"; print_r($categories); die;
 
-        return view('admin.products.add_edit_product')->with(compact('title', 'fabricArray', 'sleeveArray', 'patternArray','fitArray','occasionArray', 'categories'));
+        return view('admin.products.add_edit_product')->with(compact('title', 'fabricArray', 'sleeveArray', 'patternArray','fitArray','occasionArray', 'categories', 'productdata'));
     } 
 }

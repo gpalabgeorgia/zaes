@@ -57,7 +57,7 @@
                     <td>{{ $product->product_color }}</td>
                     <td>
                       <?php $product_image_path = "images/product_images/small/".$product->main_image; ?>
-                      @if(!empty($product->main_image) && file_exists($product_image_path))
+                      @if(empty($product->main_image) && file_exists($product_image_path))
                         <img style="width: 100px;" src="{{ asset('images/product_images/small/noimage.png') }}" alt="პროდუქტის ფოტო">
                       @else
                       <img style="width: 100px;" src="{{ asset('images/product_images/small/'.$product->main_image) }}" alt="პროდუქტის ფოტო">
