@@ -1,7 +1,6 @@
 @extends('layouts.admin_layouts.admin_layout')
 @section('content')
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -15,10 +14,8 @@
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
-
-    <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -36,7 +33,6 @@
                     <h3 class="card-title">პროდუქტები</h3>
                     <a href="{{ url('admin/add-edit-product') }}" class="btn btn-block btn-success" style="max-width: 150px; float: right; display: inline-block;">დამატება</a>
                 </div>
-              <!-- /.card-header -->
               <div class="card-body">
                 <table id="products" class="table table-bordered table-striped">
                   <thead>
@@ -45,6 +41,7 @@
                     <th>დასახელება</th>
                     <th>კოდი</th>
                     <th>ფერი</th>
+                    <th>ფოტო</th>
                     <th>კატეგორია</th>
                     <th>სექცია</th>
                     <th>სტატუსი</th>
@@ -58,6 +55,14 @@
                     <td>{{ $product->product_name }}</td>
                     <td>{{ $product->product_code }}</td>
                     <td>{{ $product->product_color }}</td>
+                    <td>
+                      <?php $product_image_path = "images/product_images/small/".$product->main_image; ?>
+                      @if(!empty($product->main_image) && file_exists($product_image_path))
+                        <img style="width: 100px;" src="{{ asset('images/product_images/small/noimage.png') }}" alt="პროდუქტის ფოტო">
+                      @else
+                      <img style="width: 100px;" src="{{ asset('images/product_images/small/'.$product->main_image) }}" alt="პროდუქტის ფოტო">
+                      @endif
+                    </td>
                     <td>{{ $product->category->category_name }}</td>
                     <td>{{ $product->section->name }}</td>
                     <td>
@@ -77,16 +82,10 @@
                   </tbody>
                 </table>
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
       </div>
-      <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
   </div>
 @endsection
