@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductsAttribute;
 use App\Models\Sections;
 use App\Models\Category;
 use Session;
@@ -249,12 +250,41 @@ class ProductController extends Controller
     public function addAttributes(Request $request, $id) {
         if($request->isMethod('post')) {
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+            foreach($data['sku'] as $key => $value) {
+                if(!empty($value)) {
+                    // SKU already exists check
+                    $attrCountSKU = ProductsAttribute::where('sku', $value)->count();
+                    if($attrCountSKU > 0) {
+                        $message = 'პროდქტი ასეთი კოდით უკვე არსებობს. გთხოვთ შეიყვანოთ სხვა კოდი';
+                        session::flash('error_message', $message);
+                        return redirect()->back();
+                    }
+                    // Size already exists check
+                    $attrCountSize = ProductsAttribute::where(['product_id'=>$id, 'size'=>$data['size'][$key]])->count();
+                    if($attrCountSize > 0) {
+                        $message = 'პროდქტი ასეთი ზომით უკვე არსებობს. გთხოვთ შეიყვანოთ სხვა ზომა';
+                        session::flash('error_message', $message);
+                        return redirect()->back();
+                    }
+                    $attribute = new ProductsAttribute;
+                    $attribute->product_id = $id;
+                    $attribute->sku = $value;
+                    $attribute->size = $data['size'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key]; 
+                    $attribute->status = 1;
+                    $attribute->save();
+                }
+            }
+            $success_message = 'პროდუქტის ატრიბუტები წარმატებით დაემატა!';
+            session::flash('success_message', $success_message);
+            return redirect()->back();
         }
         $productdata = Product::find($id);
         $productdata = json_decode(json_encode($productdata), true);
         // echo "<pre>"; print_r($productdata); die;
-        $title = "Product Attributes";
+        $title = "პროდუქტის ატრიბუტები";
         return view('admin.products.add_attributes')->with(compact('productdata', 'title'));
     }
 }

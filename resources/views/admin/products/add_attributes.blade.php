@@ -38,6 +38,14 @@
                 </button> 
             </div>
         @endif
+        @if(Session::has('error_message'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ Session::get('error_message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>
+        @endif
         <form name="attributeForm" id="attributeForm" method="post" action="{{ url('admin/add-attributes/'.$productdata['id']) }}">@csrf
             <div class="card card-default">
             <div class="card-header">
@@ -75,10 +83,10 @@
                         <div class="form-group">
                             <div class="field_wrapper">
                                 <div>
-                                    <input id="size" name="size[]" type="text" value="" placeholder="ზომა" style="width: 80px;">
-                                    <input id="sku" name="sku[]" type="text" value="" placeholder="კოდი" style="width: 80px;"/>
-                                    <input id="price" name="price[]" type="text" value="" placeholder="ფასი" style="width: 80px;" />
-                                    <input id="stock" name="stock[]" type="text" value="" placeholder="მარაგი" style="width: 80px;"/>
+                                    <input id="size" name="size[]" type="text" value="" placeholder="ზომა" style="width: 80px;" required="">
+                                    <input id="sku" name="sku[]" type="text" value="" placeholder="კოდი" style="width: 80px;" required=""/>
+                                    <input id="price" name="price[]" type="number" value="" placeholder="ფასი" style="width: 80px;" required=""/>
+                                    <input id="stock" name="stock[]" type="number" value="" placeholder="მარაგი" style="width: 80px;" required=""/>
                                     <a href="javascript:void(0);" class="add_button" title="Add field">დამატება</a>
                                 </div>
                             </div>

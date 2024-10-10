@@ -126,7 +126,7 @@ $(document).ready(function() {
     var maxField = 10; //Input fields increment limitation
     var addButton = $('.add_button'); //Add button selector
     var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div><div style="height: 10px;"></div><input type="text" name="size[]" style="width: 80px;" placeholder="ზომა"/>&nbsp;<input type="text" name="sku[]" style="width: 80px;" placeholder="კოდი"/>&nbsp;<input type="text" name="price[]" style="width: 80px;" placeholder="ფასი"/>&nbsp;<input type="text" name="stock[]" style="width: 80px;" placeholder="მარაგი"/><a href="javascript:void(0);" class="remove_button">&nbsp;წაშლა</a></div>'; //New input field html 
+    var fieldHTML = '<div><div style="height: 10px;"></div><input type="text" name="size[]" style="width: 80px;" placeholder="ზომა" required=""/>&nbsp;<input type="text" name="sku[]" style="width: 80px;" placeholder="კოდი" required=""/>&nbsp;<input type="number" name="price[]" style="width: 80px;" placeholder="ფასი" required=""/>&nbsp;<input type="number" name="stock[]" style="width: 80px;" placeholder="მარაგი" required=""/><a href="javascript:void(0);" class="remove_button">&nbsp;წაშლა</a></div>'; //New input field html 
     var x = 1; //Initial field counter is 1
     
     // Once add button is clicked
