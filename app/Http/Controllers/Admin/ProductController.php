@@ -281,7 +281,7 @@ class ProductController extends Controller
             session::flash('success_message', $success_message);
             return redirect()->back();
         }
-        $productdata = Product::find($id);
+        $productdata = Product::select('id','product_name','product_code','product_color','main_image')->with('attributes')->find($id);
         $productdata = json_decode(json_encode($productdata), true);
         // echo "<pre>"; print_r($productdata); die;
         $title = "პროდუქტის ატრიბუტები";
