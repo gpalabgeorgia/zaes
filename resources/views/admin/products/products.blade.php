@@ -73,9 +73,11 @@
                       @endif
                     </td>
                     <td>
-                      <a href="{{ url('admin/add-edit-product/'.$product->id) }}">რედაქტირება</a>
+                      <a title="პროდუქტის ატრიბუტის დამატება" href="{{ url('admin/add-attributes/'.$product->id) }}"><i class="fas fa-plus"></i></a>
                       &nbsp;&nbsp;
-                      <a href="javascript:void(0)" class="confirmDelete" record="product" recordid="{{ $product->id }}">წაშლა</a>
+                      <a title="პროდუქტის რედაქტირება" href="{{ url('admin/add-edit-product/'.$product->id) }}"><i class="fas fa-edit"></i></a>
+                      &nbsp;&nbsp;
+                      <a title="პროდუქტის წაშლა" href="javascript:void(0)" class="confirmDelete" record="product" recordid="{{ $product->id }}"><i class="fas fa-trash"></i></a>
                     </td>
                   </tr>
                   @endforeach

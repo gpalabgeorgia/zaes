@@ -245,4 +245,16 @@ class ProductController extends Controller
         $message = 'პროდუქტის წარმატებით წაიშალა!';
         return redirect()->back();
     }
+
+    public function addAttributes(Request $request, $id) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+        $productdata = Product::find($id);
+        $productdata = json_decode(json_encode($productdata), true);
+        // echo "<pre>"; print_r($productdata); die;
+        $title = "Product Attributes";
+        return view('admin.products.add_attributes')->with(compact('productdata', 'title'));
+    }
 }

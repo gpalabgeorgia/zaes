@@ -121,4 +121,29 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Products Attributes Add/Remove Script
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var fieldHTML = '<div><div style="height: 10px;"></div><input type="text" name="size[]" style="width: 80px;" placeholder="ზომა"/>&nbsp;<input type="text" name="sku[]" style="width: 80px;" placeholder="კოდი"/>&nbsp;<input type="text" name="price[]" style="width: 80px;" placeholder="ფასი"/>&nbsp;<input type="text" name="stock[]" style="width: 80px;" placeholder="მარაგი"/><a href="javascript:void(0);" class="remove_button">&nbsp;წაშლა</a></div>'; //New input field html 
+    var x = 1; //Initial field counter is 1
+    
+    // Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        if(x < maxField){ 
+            x++; //Increase field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }else{
+            alert('A maximum of '+maxField+' fields are allowed to be added. ');
+        }
+    });
+    
+    // Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrease field counter
+    });
 });
