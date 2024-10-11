@@ -301,4 +301,25 @@ class ProductController extends Controller
             return redirect()->back();
         }
     }
+
+    public function updateAttributeStatus(Request $request) {
+        if($request->ajax()) {
+            $data = $request->all();
+            if($data['status']=="Active") {
+                $status = 0;
+            }else {
+                $status = 1;
+            }
+            ProductsAttribute::where('id', $data['attribute_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status, 'attribute_id'=>$data['attribute_id']]);
+        }
+    }
+
+    public function deleteAttribute($id) {
+        // Delete Product Attribute
+        ProductsAttribute::where('id', $id)->delete();
+        $message = 'პროდუქტის ატრიბუტი წარმატებით წაიშალა!';
+        session::flash('success_message', $message);
+        return redirect()->back();
+    }
 }
