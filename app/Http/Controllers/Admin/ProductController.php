@@ -287,4 +287,18 @@ class ProductController extends Controller
         $title = "პროდუქტის ატრიბუტები";
         return view('admin.products.add_attributes')->with(compact('productdata', 'title'));
     }
+
+    public function editAttributes(Request $request, $id) {
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            foreach($data['attrId'] as $key => $attr) {
+                if(!empty($attr)) {
+                    ProductsAttribute::where(['id'=>$data['attrId'][$key]])->update(['price'=>$data['price'][$key], 'stock'=>$data['stock'][$key]]);
+                }
+            }
+            $success_message = 'პროდუქტის ატრიბუტები წარმატებით გაახლდა!';
+            session::flash('success_message', $success_message);
+            return redirect()->back();
+        }
+    }
 }

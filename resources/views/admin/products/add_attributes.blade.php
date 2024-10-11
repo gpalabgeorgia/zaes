@@ -46,6 +46,7 @@
                 </button> 
             </div>
         @endif
+
         <form name="attributeForm" id="attributeForm" method="post" action="{{ url('admin/add-attributes/'.$productdata['id']) }}">@csrf
             <div class="card card-default">
                 <div class="card-header">
@@ -95,43 +96,51 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">დადასტურება</button>
+                    <button type="submit" class="btn btn-primary">ატრიბუტების დამატება</button>
                 </div>
             </div>
         </form>
-
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">პროდუქტების დამატებული ატრიბუტები</h3>
+        <form action="{{ url('admin/edit-attributes/'.$productdata['id']) }}" name="editAttributeForm" id="editAttributeForm" method="post">@csrf
+          <div class="card">
+              <div class="card-header">
+                  <h3 class="card-title">პროდუქტების დამატებული ატრიბუტები</h3>
+              </div>
+            <div class="card-body">
+              <table id="products" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>ზომა</th>
+                  <th>კოდი</th>
+                  <th>ფასი</th>
+                  <th>მარაგი</th>
+                  <th>მოქმედებები</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @foreach($productdata['attributes'] as $attribute)
+                  <input style="display: none;" type="text" name="attrId[]" value="{{ $attribute['id']}} ">
+                <tr>
+                  <td>{{ $attribute['id'] }}</td>
+                  <td>{{ $attribute['size'] }}</td>
+                  <td>{{ $attribute['sku'] }}</td>
+                  <td>
+                    <input type="number" name="price[]" value="{{ $attribute['price'] }}" required="">
+                  </td>
+                  <td>
+                    <input type="number" name="stock[]" value="{{ $attribute['stock'] }}" required="">
+                  </td>
+                  <td></td>
+                </tr>
+                @endforeach
+                </tbody>
+              </table>
             </div>
-          <div class="card-body">
-            <table id="products" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>ზომა</th>
-                <th>კოდი</th>
-                <th>ფასი</th>
-                <th>მარაგი</th>
-                <th>მოქმედებები</th>
-              </tr>
-              </thead>
-              <tbody>
-                @foreach($productdata['attributes'] as $attribute)
-              <tr>
-                <td>{{ $attribute['id'] }}</td>
-                <td>{{ $attribute['size'] }}</td>
-                <td>{{ $attribute['sku'] }}</td>
-                <td>{{ $attribute['price'] }}</td>
-                <td>{{ $attribute['stock']}}</td>
-                <td></td>
-              </tr>
-              @endforeach
-              </tbody>
-            </table>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">ატრიბუტების გაახლება</button>
           </div>
+        </form>
         </div>
-
       </div>
     </section>
   </div>    
