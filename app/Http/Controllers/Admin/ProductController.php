@@ -322,4 +322,12 @@ class ProductController extends Controller
         session::flash('success_message', $message);
         return redirect()->back();
     }
+
+    public function addImages($id) {
+        $productdata = Product::with('images')->select('id','product_name','product_code','product_color','main_image')->find($id);
+        $productdata = json_decode(json_encode($productdata), true);
+        // echo "<pre>";print_r($productdata); die;
+        $title = "პროდუქტის ფოტოები";
+        return view('admin.products.add_images')->with(compact('productdata', 'title'));
+    }
 }
