@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductsAttribute;
+use App\Models\ProductsImage;
 use App\Models\Sections;
 use App\Models\Category;
 use Session;
@@ -207,7 +208,7 @@ class ProductController extends Controller
 
     public function deleteProductImage($id) {
         // Get Product Image
-        $productImage = Product::select('product_image')->where('id', $id)->first();
+        $productImage = Product::select('main_image')->where('id', $id)->first();
         // Get Product Image Path
         $small_image_path = 'images/product_images/small';
         $medium_image_path = 'images/product_images/medium';
@@ -243,7 +244,7 @@ class ProductController extends Controller
         // Delete Product Video form categories table
         Product::where('id', $id)->update(['product_video'=>'']);
         session::flash('success_message', $message);
-        $message = 'პროდუქტის წარმატებით წაიშალა!';
+        $message = 'პროდუქტის ფოტო წარმატებით წაიშალა!';
         return redirect()->back();
     }
 
@@ -323,11 +324,81 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    public function addImages($id) {
+    public function addImages(Request $request, $id) {
+        if($request->isMethod('post')) {
+            if($request->hasFile('images')) {
+                $images = $request->file('images');
+                foreach($images as $key => $image) {
+                    $productImage = new ProductsImage;
+                    $image_tmp = Image::make($image);
+                    // $originalName = $image->getClientOriginalName();
+                    $extension = $image->getClientOriginalExtension();
+                    $imageName = rand(111,99999).time().".".$extension;
+                    // set paths for small, medium and large images
+                    $large_image_path = 'images/product_images/large/'.$imageName;
+                    $medium_image_path = 'images/product_images/medium/'.$imageName;
+                    $small_image_path = 'images/product_images/small/'.$imageName;
+                    // Upload Large Image after Resize
+                    Image::make($image_tmp)->save($large_image_path); // W: 1040 H:1200
+                    // Upload Medium and Small Image after Resize
+                    Image::make($image_tmp)->resize(520,600)->save($medium_image_path);
+                    Image::make($image_tmp)->resize(260,300)->save($small_image_path);
+                    // Save Main Image in products table
+                    $productImage->image = $imageName;
+                    $productImage->image = $imageName;
+                    $productImage->product_id = $id;
+                    $productImage->status = 1;
+                    $productImage->save();
+                }
+                $message = "პროდუქტის ფოტოები წარმატებით დაემატა!";
+                session::flash('success_message', $message);
+                return redirect()->back();
+            }
+        }
         $productdata = Product::with('images')->select('id','product_name','product_code','product_color','main_image')->find($id);
         $productdata = json_decode(json_encode($productdata), true);
         // echo "<pre>";print_r($productdata); die;
         $title = "პროდუქტის ფოტოები";
         return view('admin.products.add_images')->with(compact('productdata', 'title'));
+    }
+
+    public function updateImageStatus(Request $request) {
+        if($request->ajax()) {
+            $data = $request->all();
+            if($data['status']=="Active") {
+                $status = 0;
+            }else {
+                $status = 1;
+            }
+            ProductsImage::where('id', $data['image_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status, 'image_id'=>$data['image_id']]);
+        }
+    }
+
+    public function deleteImage($id) {
+        // Get Product Image
+        $productImage = ProductsImage::select('image')->where('id', $id)->first();
+        // Get Product Image Path
+        $small_image_path = 'images/product_images/small';
+        $medium_image_path = 'images/product_images/medium';
+        $large_image_path = 'images/product_images/large';
+        // Delete Product Small Image if exsts in small folder
+        if(file_exists($small_image_path.$productImage->image)) {
+            unlink($small_image_path.$productImage->image);
+        }
+        // Delete Product Medium Image if exsts in small folder
+        if(file_exists($medium_image_path.$productImage->image)) {
+            unlink($medium_image_path.$productImage->image);
+        }
+        // Delete Product Large Image if exsts in small folder
+        if(file_exists($large_image_path.$productImage->image)) {
+            unlink($large_image_path.$productImage->image);
+        }
+        // Delete Product Image form product table
+        ProductsImage::where('id', $id)->delete();
+        
+        $message = 'პროდუქტის ფოტო წარმატებით წაიშალა!';
+        session::flash('success_message', $message);
+        return redirect()->back();
     }
 }

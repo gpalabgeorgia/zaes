@@ -84,7 +84,7 @@
                             <div class="form-group">
                                 <div class="field_wrapper">
                                     <div>
-                                        <input multiple="" id="image" name="image[]" type="file" value="" required="">
+                                        <input multiple="" id="images" name="images[]" type="file" value="" required="">
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
                   </td>
                   <td>
                     @if($image['status']==1)
-                          <a class="updateImagetatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)">Active</a>
+                          <a class="updateImageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)">Active</a>
                       @else
                           <a class="updateImageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)">Inactive</a>
                       @endif
