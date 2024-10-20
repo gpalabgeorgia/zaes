@@ -22,7 +22,7 @@ $(document).ready(function() {
 
      // Update Sections Status
      $(".updateSectionsStatus").click(function() {
-        let status = $(this).text();
+        let status = $(this).children("i").attr("status");
         let section_id = $(this).attr("section_id");
         $.ajax({
             type: 'post',
@@ -30,9 +30,9 @@ $(document).ready(function() {
             data: {status:status,section_id:section_id},
             success: function(resp) {
                 if(resp['status']==0) {
-                    $("#section-"+section_id).html("<a class='updateSectionsStatus' href='javascript:void(0)'>Inactive</a>");
+                    $("#section-"+section_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
                 }else if(resp['status']==1) {
-                    $("#section-"+section_id).html("<a class='updateSectionsStatus' href='javascript:void(0)'>Active</a>");
+                    $("#section-"+section_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
                 }
             },error:function() {
                 alert("წარმოიშვა შეცდომა");
@@ -62,7 +62,7 @@ $(document).ready(function() {
 
     // Update Categories Status
     $(".updateCategoryStatus").click(function() {
-        let status = $(this).text();
+        let status = $(this).children("i").attr("status");
         let category_id = $(this).attr("category_id");
         $.ajax({
             type: 'post',
@@ -70,9 +70,9 @@ $(document).ready(function() {
             data: {status:status,category_id:category_id},
             success: function(resp) {
                 if(resp['status']==0) {
-                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'>Inactive</a>");
+                    $("#category-"+category_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
                 }else if(resp['status']==1) {
-                    $("#category-"+category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'>Active</a>");
+                    $("#category-"+category_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
                 }
             },error:function() {
                 alert("წარმოიშვა შეცდომა");
@@ -124,7 +124,7 @@ $(document).ready(function() {
 
      // Update Products Status
      $(".updateProductStatus").click(function() {
-        let status = $(this).text();
+        let status = $(this).children("i").attr("status");
         let product_id = $(this).attr("product_id");
         $.ajax({
             type: 'post',
@@ -132,9 +132,9 @@ $(document).ready(function() {
             data: {status:status,product_id:product_id},
             success: function(resp) {
                 if(resp['status']==0) {
-                    $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'>Inactive</a>");
+                    $("#product-"+product_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
                 }else if(resp['status']==1) {
-                    $("#product-"+product_id).html("<a class='updateProductStatus' href='javascript:void(0)'>Active</a>");
+                    $("#product-"+product_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
                 }
             },error:function() {
                 alert("წარმოიშვა შეცდომა");
@@ -144,7 +144,7 @@ $(document).ready(function() {
 
      // Update Products Attribute Status
      $(".updateAttributeStatus").click(function() {
-        let status = $(this).text();
+        let status = $(this).children("i").attr("status");
         let attribute_id = $(this).attr("attribute_id");
         $.ajax({
             type: 'post',
@@ -152,9 +152,9 @@ $(document).ready(function() {
             data: {status:status,attribute_id:attribute_id},
             success: function(resp) {
                 if(resp['status']==0) {
-                    $("#attribute-"+attribute_id).html("Inactive");
+                    $("#attribute-"+attribute_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
                 }else if(resp['status']==1) {
-                    $("#attribute-"+attribute_id).html("Active");
+                    $("#attribute-"+attribute_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
                 }
             },error:function() {
                 alert("წარმოიშვა შეცდომა");
@@ -164,7 +164,7 @@ $(document).ready(function() {
 
     // Update Products Images Status
     $(".updateImageStatus").click(function() {
-        let status = $(this).text();
+        let status = $(this).children("i").attr("status");
         let image_id = $(this).attr("image_id");
         $.ajax({
             type: 'post',
@@ -172,9 +172,9 @@ $(document).ready(function() {
             data: {status:status,image_id:image_id},
             success: function(resp) {
                 if(resp['status']==0) {
-                    $("#image-"+image_id).html("Inactive");
+                    $("#image-"+image_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
                 }else if(resp['status']==1) {
-                    $("#image-"+image_id).html("Active");
+                    $("#image-"+image_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
                 }
             },error:function() {
                 alert("წარმოიშვა შეცდომა");

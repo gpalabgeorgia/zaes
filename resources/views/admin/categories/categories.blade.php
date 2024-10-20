@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>კატეგორიები</h1>
+            <h1>კატეგორიები</h1> 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -46,7 +46,6 @@
                     <th>მშობელი კატეგორია</th>
                     <th>კატეგორია</th>
                     <th>URL</th>
-                    <th>სტატუსი</th>
                     <th>მოქმედებები</th>
                   </tr>
                   </thead>
@@ -65,15 +64,14 @@
                     <td>{{ $category->url }}</td>
                     <td>
                       @if($category->status==1)
-                          <a class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}" href="javascript:void(0)">Active</a>
+                          <a class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}" href="javascript:void(0)"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                       @else
-                          <a class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}" href="javascript:void(0)">Inactive</a>
+                          <a class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}" href="javascript:void(0)"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                       @endif
-                    </td>
-                    <td>
-                      <a href="{{ url('admin/add-edit-category/'.$category->id) }}">რედაქტირება</a>
                       &nbsp;&nbsp;
-                      <a href="javascript:void(0)" class="confirmDelete" record="category" recordid="{{ $category->id }}">წაშლა</a>
+                      <a href="{{ url('admin/add-edit-category/'.$category->id) }}"><i class="fas fa-edit"></i></a>
+                      &nbsp;&nbsp;
+                      <a href="javascript:void(0)" class="confirmDelete" record="category" recordid="{{ $category->id }}"><i class="fas fa-trash"></i></a>
                     </td>
                   </tr>
                   @endforeach

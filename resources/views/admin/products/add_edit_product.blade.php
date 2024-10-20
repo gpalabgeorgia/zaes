@@ -42,7 +42,6 @@
             <div class="card card-default">
             <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
-
                 <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -72,35 +71,52 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>აირჩიეთ ბრენდი</label>
+                        <select class="form-control select2" name="brand_id" id="brand_id" style="width: 100%;">
+                        <option value="">არჩევა</option>
+                        @foreach($brands as $brand)
+                            <option value="{{ $brand['id'] }}" @if(!empty($productdata['brand_id']) && $productdata['brand_id']==$brand['id']) selected="" @endif>{{ $brand['name'] }}</option>
+                        @endforeach
+                        </select>
+                    </div> 
+                    
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label for="product_name">პროდუქტის სახელი</label>
                         <input type="text" class="form-control" id="product_name" name="product_name" placeholder="პროდუქტის სახელი" @if(!empty($productdata['product_name'])) value="{{ $productdata['product_name'] }}" @else value="{{ old('product_name') }}" @endif>
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="product_code">პროდუქტის კოდი</label>
                         <input type="text" class="form-control" id="product_code" name="product_code" placeholder="პროდუქტის კოდი" @if(!empty($productdata['product_code'])) value="{{ $productdata['product_code'] }}" @else value="{{ old('product_code') }}" @endif>
                     </div>
+                    
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="product_name">პროდუქტის ფერი</label>
                         <input type="text" class="form-control" id="product_color" name="product_color" placeholder="პროდუქტის ფერი" @if(!empty($productdata['product_color'])) value="{{ $productdata['product_color'] }}" @else value="{{ old('product_color') }}" @endif>
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="product_price">პროდუქტის ფასი</label>
                         <input type="text" class="form-control" id="product_code" name="product_price" placeholder="პროდუქტის ფასი" @if(!empty($productdata['product_price'])) value="{{ $productdata['product_price'] }}" @else value="{{ old('product_price') }}" @endif>
                     </div>
+                    
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="product_discount">პროდუქტის ფასდაკლება (%)</label>
                         <input type="text" class="form-control" id="product_discount" name="product_discount" placeholder="პროდუქტის ფასდაკლება" @if(!empty($productdata['product_discount'])) value="{{ $productdata['product_discount'] }}" @else value="{{ old('product_discount') }}" @endif>
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="product_weight">პროდუქტის წონა</label>
                         <input type="text" class="form-control" id="product_weight" name="product_weight" placeholder="პროდუქტის წონა" @if(!empty($productdata['product_weight'])) value="{{ $productdata['product_weight'] }}" @else value="{{ old('product_weight') }}" @endif>
                     </div>
+                    
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="main_image">მთავარი ფოტო</label>
                         <div class="input-group">
@@ -120,12 +136,7 @@
                                 <a class="confirmDelete" href="javascript:void(0)" record="product-image"recordid="{{ $productdata['id'] }}">ფოტოს წაშლა</a>
                             </div>
                         @endif
-
                     </div>
-                </div>
-                </div>
-                <div class="row">
-                <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="product_video">პროდუქტის ვიდეო</label>
                         <div class="input-group">
@@ -142,6 +153,10 @@
                                 <a class="confirmDelete" href="javascript:void(0)" record="product-video" recordid="{{ $productdata['id'] }}">ვიდეოს წაშლა</a></div>
                         @endif
                     </div>
+                    
+                   
+                </div>
+                <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="description">პროდუქტის აღწერა</label>
                         <textarea name="description" id="description" class="form-control" placeholder="პროდუქტის აღწერა" rows="3">
@@ -149,19 +164,19 @@
                         </textarea>
                     </div>
                     <div class="form-group">
-                        <label for="meta_keywords">Meta საკვანძო სიტყვები</label>
-                        <textarea name="meta_keywords" id="meta_keywords" class="form-control" placeholder="Meta საკვანძო სიტყვები" rows="3">
-                            @if(!empty($productdata['meta_keywords'])) {{ $productdata['meta_keywords'] }} @else {{ old('meta_keywords') }} @endif
-                        </textarea>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="form-group">
                         <label for="wash_care">პროდუქტის მოვლა</label>
                         <textarea name="wash_care" id="wash_care" class="form-control" placeholder="პროდუქტის მოვლა" rows="3">
                             @if(!empty($productdata['wash_care'])) {{ $productdata['wash_care'] }} @else {{ old('wash_care') }} @endif
                         </textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="meta_keywords">Meta საკვანძო სიტყვები</label>
+                        <textarea name="meta_keywords" id="meta_keywords" class="form-control" placeholder="Meta საკვანძო სიტყვები" rows="3">
+                            @if(!empty($productdata['meta_keywords'])) {{ $productdata['meta_keywords'] }} @else {{ old('meta_keywords') }} @endif
+                        </textarea>
+                    </div> 
+                </div>
+                <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>აირჩიეთ მასალა</label>
                         <select class="form-control select2" name="fabric" id="fabric" style="width: 100%;">
@@ -171,8 +186,6 @@
                         @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label>აირჩიეთ მასალა</label>
                         <select class="form-control select2" name="fabric" id="fabric" style="width: 100%;">

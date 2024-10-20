@@ -9,6 +9,7 @@ use App\Models\ProductsAttribute;
 use App\Models\ProductsImage;
 use App\Models\Sections;
 use App\Models\Category;
+use App\Models\Brand;
 use Session;
 use Image;
 
@@ -56,7 +57,6 @@ class ProductController extends Controller
             $title = "პროდუქტის რედაქტირება";
             $productdata = Product::find($id);
             $productdata = json_decode(json_encode($productdata), true);
-            // echo "<pre>"; print_r($productdata); die;
             $product = Product::find($id);
             $message = "პროდუქტი წარმატებით განახლდა";
         }
@@ -66,6 +66,7 @@ class ProductController extends Controller
             // Product Validations
             $rules = [
                 'category_id' => 'required',
+                'brand_id' => 'required',
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'product_code' => 'required|regex:/^[\w-]*$/',
                 'product_price' => 'required|numeric',
@@ -73,6 +74,7 @@ class ProductController extends Controller
             ];
             $customMessages = [
                 'category_id.required' => 'კატეგორია სავალდებულოა',
+                'brand_id.required' => 'ბრენდი სავალდებულოა',
                 'product_name.required' => 'გთხოვთ შეიყვანოთ პროდუქტის სახელი',
                 'product_name.regex' => 'გთხოვთ შეიყვანოთ პროდუქტის ვალიდური სახელი',
                 'product_code.required' => 'გთხოვთ შეიყვანოთ პროდუქტის კოდი',
@@ -168,6 +170,7 @@ class ProductController extends Controller
             // Save Product Details in products table
             $categoryDetails = Category::find($data['category_id']);
             $product->section_id = $categoryDetails['section_id'];
+            $product->brand_id = $data['brand_id'];
             $product->category_id = $data['category_id'];
             $product->product_name = $data['product_name'];
             $product->product_code = $data['product_code']; 
@@ -203,7 +206,11 @@ class ProductController extends Controller
         $categories = Sections::with('categories')->get();
         $categories = json_decode(json_encode($categories), true);
 
-        return view('admin.products.add_edit_product')->with(compact('title', 'fabricArray', 'sleeveArray', 'patternArray','fitArray','occasionArray', 'categories', 'productdata'));
+        // Get All Brands
+        $brands = Brand::where('status', 1)->get();
+        $brands = json_decode(json_encode($brands), true);
+
+        return view('admin.products.add_edit_product')->with(compact('title', 'fabricArray', 'sleeveArray', 'patternArray','fitArray','occasionArray', 'categories', 'productdata', 'brands'));
     } 
 
     public function deleteProductImage($id) {
@@ -284,7 +291,6 @@ class ProductController extends Controller
         }
         $productdata = Product::select('id','product_name','product_code','product_color','main_image')->with('attributes')->find($id);
         $productdata = json_decode(json_encode($productdata), true);
-        // echo "<pre>"; print_r($productdata); die;
         $title = "პროდუქტის ატრიბუტები";
         return view('admin.products.add_attributes')->with(compact('productdata', 'title'));
     }
