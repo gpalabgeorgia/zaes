@@ -33,8 +33,6 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
           @if(Session::get('page')=="dashboard")
             <?php $active = "active"; ?>
           @else
@@ -89,7 +87,7 @@
           </li>
 
           {{-- კატალოგი --}}
-          @if(Session::get('page')=="sections" || Session::get('page')=='categories' || Session::get('page')=='products')
+          @if(Session::get('page')=="sections" || Session::get('page')=='categories' || Session::get('page')=='products' || Session::get('page')=='brands')
             <?php $active = "active"; ?>
           @else
             <?php $active = ""; ?>
@@ -112,6 +110,17 @@
                 <a href="{{ url('admin/sections') }}" class="nav-link {{ $active }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>სექციები</p>
+                </a>
+              </li>
+              @if(Session::get('page')=="brands")
+                <?php $active = "active"; ?>
+              @else
+                <?php $active = ""; ?>
+              @endif
+              <li class="nav-item">
+                <a href="{{ url('admin/brands') }}" class="nav-link {{ $active }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ბრენდები</p>
                 </a>
               </li>
               @if(Session::get('page')=="categories")

@@ -40,6 +40,26 @@ $(document).ready(function() {
         });
     });
 
+    // Update Brands Status
+    $(".updateBrandStatus").click(function() {
+        let status = $(this).children("i").attr("status");
+        let brand_id = $(this).attr("brand_id");
+        $.ajax({
+            type: 'post',
+            url: '/admin/update-brand-status',
+            data: {status:status,brand_id:brand_id},
+            success: function(resp) {
+                if(resp['status']==0) {
+                    $("#brand-"+brand_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
+                }else if(resp['status']==1) {
+                    $("#brand-"+brand_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
+                }
+            },error:function() {
+                alert("წარმოიშვა შეცდომა");
+            }
+        });
+    });
+
     // Update Categories Status
     $(".updateCategoryStatus").click(function() {
         let status = $(this).text();
