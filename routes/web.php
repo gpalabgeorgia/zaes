@@ -7,11 +7,13 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 
+use App\Http\Controllers\Front\IndexController as FrontIndexController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::prefix('/admin')->namespace('Admin')->group(function() {
     // All the admin routes will be defined here
@@ -69,4 +71,8 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::get('delete-image/{id}', [ProductController::class, 'deleteImage']);
     });
     
+});
+
+Route::namespace('Front')->group(function() {
+    Route::get('/', [FrontIndexController::class, 'index']);
 });
