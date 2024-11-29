@@ -36,7 +36,7 @@ $sections = Sections::sections();
 								<li class="divider"></li>
 								<li class="nav-header"><a href="#">{{ $category['category_name'] }}</a></li>
 								@foreach($category['subcategories'] as $subcategory)
-									<li><a href="#">{{ $subcategory[''] }}</a></li>
+									<li><a href="#">{{ $subcategory['category_name'] }}</a></li>
 								@endforeach
 							@endforeach
 						</ul>
