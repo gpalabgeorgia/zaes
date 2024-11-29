@@ -2,13 +2,11 @@ $(document).ready(function() {
     // Check Admin password is correct
     $("#current_pwd ").keyup(function() {
         var current_pwd = $("#current_pwd").val();
-        // alert(current_pwd);
        $.ajax({
         type: 'post',
         url: '/admin/check-current-pwd',
         data: {current_pwd:current_pwd},
         success: function(resp) {
-            // alert(resp);
             if(resp=="false") {
                 $("#chkCurentPwd").html("<font color=red>მიმდინარე პაროლი არასწორია</font>");
             }else if(resp="true") {
