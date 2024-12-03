@@ -10,12 +10,13 @@ class IndexController extends Controller
 {
     public function index() {
         // Get featured items
-        $featuredItemsCount = Product::where('is_featured', 'Yes')->count();
-        $featuredItems = Product::where('is_featured', 'Yes')->get()->toArray();
+        $featuredItemsCount = Product::where('is_featured', 'Yes')->where('status', 1)->count();
+        $featuredItems = Product::where('is_featured', 'Yes')->where('status', 1)->get()->toArray();
         $featuredItemsChunk = array_chunk($featuredItems, 4);
-        // echo "<pre>"; print_r($featuredItemsChunk); die;
-        // dd($featuredItems); die;
+        // Get New Products
+        $newProducts = Product::orderBy('id', 'Desc')->where('status', 1)->limit(6)->get()->toArray();
+        // echo "<pre>"; print_r($newProducts); die;
         $page_name = 'Index';
-        return view('front.index')->with(compact('page_name', 'featuredItemsChunk', 'featuredItemsCount'));
+        return view('front.index')->with(compact('page_name', 'featuredItemsChunk', 'featuredItemsCount', 'newProducts'));
     }
 }
