@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SectionsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\BannersController;
 
 use App\Http\Controllers\Front\IndexController as FrontIndexController;
 
@@ -69,6 +70,11 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
         Route::match(['get', 'post'], 'add-images/{id}', [ProductController::class, 'addImages']);
         Route::post('update-image-status', [ProductController::class, 'updateImageStatus']);
         Route::get('delete-image/{id}', [ProductController::class, 'deleteImage']);
+
+        // Banners
+        Route::get('banners', [BannersController::class, 'banners']);
+        Route::post('update-banner-status', [BannersController::class, 'updateBannerStatus']);
+        Route::get('delete-banner/{id}', [BannersController::class, 'deleteBanner']);
     });
     
 });
