@@ -15,7 +15,7 @@ use Image;
 
 class ProductController extends Controller
 {
-    public function products() {
+    public function products() { 
         Session::put('page', 'products');
         $products = Product::with(['category'=>function($query){
             $query->select('id','category_name');
