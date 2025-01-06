@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\BannersController;
 
 use App\Http\Controllers\Front\IndexController as FrontIndexController;
+use App\Http\Controllers\Front\ProductsController as FrontProductsController;
 
 
 
@@ -82,4 +83,5 @@ Route::prefix('/admin')->namespace('Admin')->group(function() {
 
 Route::namespace('Front')->group(function() {
     Route::get('/', [FrontIndexController::class, 'index']);
+    Route::get('/{url}', [FrontProductsController::class, 'listing']);
 });
